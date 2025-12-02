@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить вещь</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Фавиконки для разных устройств -->
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%232e8b57'/%3E%3Cpath d='M30,30 L70,30 L75,40 L80,50 L80,75 L75,85 L60,90 L40,90 L25,85 L20,75 L20,50 L25,40 Z' fill='white' stroke='%232e8b57' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='38' r='6' fill='%232e8b57'/%3E%3Crect x='45' y='38' width='10' height='25' fill='%232e8b57'/%3E%3Cpath d='M20,50 Q30,45 50,45 Q70,45 80,50' fill='none' stroke='%232e8b57' stroke-width='2'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%232e8b57'/%3E%3Cpath d='M30,30 L70,30 L75,40 L80,50 L80,75 L75,85 L60,90 L40,90 L25,85 L20,75 L20,50 L25,40 Z' fill='white' stroke='%232e8b57' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='38' r='6' fill='%232e8b57'/%3E%3Crect x='45' y='38' width='10' height='25' fill='%232e8b57'/%3E%3Cpath d='M20,50 Q30,45 50,45 Q70,45 80,50' fill='none' stroke='%232e8b57' stroke-width='2'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/png"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%232e8b57'/%3E%3Cpath d='M30,30 L70,30 L75,40 L80,50 L80,75 L75,85 L60,90 L40,90 L25,85 L20,75 L20,50 L25,40 Z' fill='white' stroke='%232e8b57' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='38' r='6' fill='%232e8b57'/%3E%3Crect x='45' y='38' width='10' height='25' fill='%232e8b57'/%3E%3Cpath d='M20,50 Q30,45 50,45 Q70,45 80,50' fill='none' stroke='%232e8b57' stroke-width='2'/%3E%3C/svg%3E">
+    <link rel="manifest" href="data:application/json,{}">
+    <meta name="theme-color" content="#2e8b57">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* шапка */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2d3e56;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #88a998;
+        }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-left: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-support {
+            background-color: #f78659;
+            color: white;
+            border: 1px solid #f78659;
+        }
+
+        .btn-login {
+            background-color: transparent;
+            color: #88a998;
+            border: 1px solid #88a998;
+        }
+
+        .btn-primary {
+            background-color: #f78659;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .btn-secondary {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* основная часть */
+        .add-item {
+            margin-top: 80px;
+            padding: 40px 0;
+        }
+
+        .add-item-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .add-item-header h1 {
+            font-family: 'Free Mono';
+            font-size: 42px;
+            color: #2d3e56;
+            margin-bottom: 10px;
+        }
+
+        .add-item-header p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* Информационный блок о пожертвовании */
+        .donation-info {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #88a998 0%, #669e85 100%);
+            border-radius: 10px;
+            padding: 25px 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .donation-info-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .donation-info-icon {
+            font-size: 32px;
+            color: #fff;
+        }
+
+        .donation-info-title {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .donation-info-text {
+            font-size: 15px;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .donation-info-text strong {
+            font-weight: 600;
+            color: #e1d2a9;
+        }
+
+        .donation-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            border-radius: 8px;
+        }
+
+        .benefit-item i {
+            font-size: 20px;
+            color: #e1d2a9;
+        }
+
+        .benefit-item span {
+            font-size: 14px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3e56;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 24px;
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #3a6197;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .ai-badge i {
+            font-size: 12px;
+        }
+
+        .beta-tag {
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .ai-hint {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            border-left: 4px solid #3a6197;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .ai-hint i {
+            color: #3a6197;
+            margin-right: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #88a998;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* загрузка фото */
+        .photo-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .photo-upload:hover {
+            border-color: #88a998;
+            background-color: #f9f9f9;
+        }
+
+        .photo-upload.dragover {
+            border-color: #88a998;
+            background-color: #669e85;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: #88a998;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            margin-bottom: 15px;
+        }
+
+        .upload-text h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .upload-text p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .upload-btn {
+            background: #88a998;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .upload-btn:hover {
+            background: #669e85;
+        }
+
+        .photo-preview {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .remove-photo {
+            margin-top: 10px;
+            background: #f8d7da;
+            color: #721c24;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        /* подвал. */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                position: static;
+                transform: none;
+                margin-bottom: 10px;
+            }
+
+            nav ul {
+                margin-bottom: 15px;
+                justify-content: center;
+            }
+
+            .auth-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .btn {
+                margin: 5px;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .donation-benefits {
+                grid-template-columns: 1fr;
+            }
+
+            .donation-info {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-upload {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- шапка -->
+    <header>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="{{url_for('main')}}">Главная</a></li>
+                    <li><a href="{{url_for('catalog')}}">Каталог</a></li>
+                </ul>
+            </nav>
+
+            <div class="logo">CLORING</div>
+
+            <div class="auth-buttons">
+                <button onclick="window.location.href='https://www.tbank.ru/rm/r_RMOvfgICkd.eCZlKLNRvJ/uagqG93443/'"
+                    class="btn btn-support">Поддержать проект</button>
+                <a href="{{url_for('logout')}}" class="btn btn-login">Выйти</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <section class="add-item">
+        <div class="add-item-header">
+            <h1>Пожертвовать одежду</h1>
+            <p>Поделитесь вещами, которые больше не носите, и помогите другим</p>
+        </div>
+
+        <!-- Информационный блок о пожертвовании -->
+        <div class="donation-info">
+            <div class="donation-info-header">
+                <div class="donation-info-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2 class="donation-info-title">Как работает пожертвование одежды?</h2>
+            </div>
+            <p class="donation-info-text">
+                Добавляя вещь на платформу CLORING, вы делаете <strong>доброе дело</strong> — даёте одежде вторую жизнь
+                и помогаете тем, кто в ней нуждается.
+                После заполнения формы, вам откроется адрес пункта сбора одежды. Когда вы доставите одежду по месту
+                назначения вам будут начислены баллы.
+            </p>
+
+            <div class="donation-benefits">
+                <div class="benefit-item">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Помощь нуждающимся</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-star"></i>
+                    <span>Получайте баллы за каждую вещь</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form id="add-item-form" enctype="multipart/form-data">
+                <!-- Фотография -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-camera"></i>
+                        Фотография вещи
+                        <span class="ai-badge">
+                            <i class="fas fa-robot"></i> ИИ-анализ <span class="beta-tag">BETA</span>
+                        </span>
+                    </h2>
+                    <p class="ai-hint">
+                        <i class="fas fa-magic"></i> 
+                        Загрузите фото — ИИ автоматически определит характеристики вещи. Подождите 1-2 минуты.
+                    </p>
+
+                    <div class="photo-upload" id="photo-upload-area">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="upload-text">
+                            <h3>Добавьте фотографию</h3>
+                            <p>Перетащите сюда изображение или нажмите для выбора</p>
+                        </div>
+                        <button type="button" class="upload-btn" id="upload-btn">Выбрать файл</button>
+                        <input type="file" id="photo-input" accept="image/*" name="clothes_photo"
+                            style="display: none;">
+                    </div>
+
+                    <div class="photo-preview" id="photo-preview">
+                        <img src="" alt="Предпросмотр" class="preview-image" id="preview-image">
+                        <button type="button" class="remove-photo" id="remove-photo">Удалить фото</button>
+                    </div>
+                </div>
+
+                <!-- мейне часть -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-info-circle"></i>
+                        Основная информация
+                    </h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="item-name">Название вещи *</label>
+                        <input type="text" class="form-input" id="item-name" name="clothes_name"
+                            placeholder="Например: Синее платье" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="item-category">Категория *</label>
+                            <select class="form-select" id="item-category" name="clothes_category" required>
+                                <option value="">Выберите категорию</option>
+                                <option value="dress">Платья</option>
+                                <option value="blouse">Блузки</option>
+                                <option value="t-shirt">Футболки</option>
+                                <option value="shirt">Рубашки</option>
+                                <option value="pants">Брюки</option>
+                                <option value="jeans">Джинсы</option>
+                                <option value="skirt">Юбки</option>
+                                <option value="jacket">Куртки</option>
+                                <option value="coat">Пальто</option>
+                                <option value="shoes">Обувь</option>
+                                <option value="accessories">Аксессуары</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="item-size">Размер *</label>
+                            <select class="form-select" id="item-size" name="clothes_size" required>
+                                <option value="">Выберите размер</option>
+                                <option value="xs">XS</option>
+                                <option value="s">S</option>
+                                <option value="m">M</option>
+                                <option value="l">L</option>
+                                <option value="xl">XL</option>
+                                <option value="xxl">XXL</option>
+                                <option value="36">36</option>
+                                <option value="38">38</option>
+                                <option value="40">40</option>
+                                <option value="42">42</option>
+                                <option value="44">44</option>
+                                <option value="46">46</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="item-condition">Состояние *</label>
+                        <select class="form-select" id="item-condition" name="clothes_condition" required>
+                            <option value="">Выберите состояние</option>
+                            <option value="new">Новое (с биркой)</option>
+                            <option value="excellent">Отличное</option>
+                            <option value="good">Хорошее</option>
+                            <option value="satisfactory">Удовлетворительное</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Дополнительная информация -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-tshirt"></i>
+                        Дополнительная информация
+                    </h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="item-brand">Бренд (если известен)</label>
+                        <input type="text" class="form-input" id="item-brand" name="clothes_brand"
+                            placeholder="Например: Zara, H&M">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="item-material">Материал</label>
+                        <input type="text" class="form-input" id="item-material" name="clothes_material"
+                            placeholder="Например: Хлопок 100%">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="item-color">Цвет</label>
+                        <input type="text" class="form-input" id="item-color" name="clothes_color"
+                            placeholder="Например: Синий">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="item-description">Описание</label>
+                        <textarea class="form-textarea" id="item-description" name="clothes_description"
+                            placeholder="Опишите вашу вещь, ее особенности, историю..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Действия формы -->
+                <div class="form-actions">
+                    <a href="{{url_for('after_donation',email=email)}}" class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-primary">Пожертвовать вещь</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- подвал.... -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 CLORING. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const photoUploadArea = document.getElementById('photo-upload-area');
+            const photoInput = document.getElementById('photo-input');
+            const uploadBtn = document.getElementById('upload-btn');
+            const photoPreview = document.getElementById('photo-preview');
+            const previewImage = document.getElementById('preview-image');
+            const removePhotoBtn = document.getElementById('remove-photo');
+            const addItemForm = document.getElementById('add-item-form');
+
+            // Открытие диалога выбора файла
+            uploadBtn.addEventListener('click', function () {
+                photoInput.click();
+            });
+
+            photoUploadArea.addEventListener('click', function () {
+                photoInput.click();
+            });
+
+
+            // Функция для анализа изображения с помощью VLM
+            async function analyzeImage(file) {
+                try {
+                    console.log('🔵 Начинаем анализ изображения...', file.name);
+                    
+                    const formData = new FormData();
+                    formData.append('image', file);
+
+                    // Показываем индикатор загрузки
+                    const uploadText = document.querySelector('.upload-text h3');
+                    if (uploadText) {
+                        const originalText = uploadText.textContent;
+                        uploadText.textContent = '🤖 Анализирую изображение...';
+                        uploadText.style.color = '#88a998';
+                    }
+
+                    console.log('📤 Отправляем запрос на сервер...');
+                    const response = await fetch('{{ url_for("analyze_clothes_image") }}', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    console.log('📥 Получен ответ:', response.status);
+                    const result = await response.json();
+                    console.log('📊 Результат анализа:', result);
+
+                    if (uploadText) {
+                        uploadText.textContent = 'Добавьте фотографию';
+                        uploadText.style.color = '';
+                    }
+
+                    if (result.success && result.data) {
+                        // Заполняем поля формы данными от VLM
+                        const data = result.data;
+                        console.log('✅ Заполняем поля данными:', data);
+
+                        let filled = [];
+
+                        // Название вещи
+                        if (data.clothes_name) {
+                            const nameInput = document.getElementById('item-name');
+                            if (nameInput) {
+                                nameInput.value = data.clothes_name;
+                                filled.push('название: ' + data.clothes_name);
+                                console.log('✔️ Название установлено:', data.clothes_name);
+                            }
+                        }
+
+                        if (data.clothes_category) {
+                            const categorySelect = document.getElementById('item-category');
+                            if (categorySelect) {
+                                categorySelect.value = data.clothes_category;
+                                filled.push('категория: ' + data.clothes_category);
+                                console.log('✔️ Категория установлена:', data.clothes_category);
+                            }
+                        }
+
+                        // Состояние
+                        if (data.clothes_condition) {
+                            const conditionSelect = document.getElementById('item-condition');
+                            if (conditionSelect) {
+                                conditionSelect.value = data.clothes_condition;
+                                filled.push('состояние: ' + data.clothes_condition);
+                                console.log('✔️ Состояние установлено:', data.clothes_condition);
+                            }
+                        }
+
+                        if (data.clothes_color) {
+                            const colorInput = document.getElementById('item-color');
+                            if (colorInput) {
+                                colorInput.value = data.clothes_color;
+                                filled.push('цвет: ' + data.clothes_color);
+                                console.log('✔️ Цвет установлен:', data.clothes_color);
+                            }
+                        }
+
+                        if (data.clothes_material) {
+                            const materialInput = document.getElementById('item-material');
+                            if (materialInput) {
+                                materialInput.value = data.clothes_material;
+                                filled.push('материал: ' + data.clothes_material);
+                                console.log('✔️ Материал установлен:', data.clothes_material);
+                            }
+                        }
+
+                        if (data.clothes_brand) {
+                            const brandInput = document.getElementById('item-brand');
+                            if (brandInput) {
+                                brandInput.value = data.clothes_brand;
+                                filled.push('бренд: ' + data.clothes_brand);
+                                console.log('✔️ Бренд установлен:', data.clothes_brand);
+                            }
+                        }
+
+                        if (data.clothes_description) {
+                            const descInput = document.getElementById('item-description');
+                            if (descInput) {
+                                descInput.value = data.clothes_description;
+                                filled.push('описание');
+                                console.log('✔️ Описание установлено:', data.clothes_description);
+                            }
+                        }
+
+                        // Показываем уведомление об успешном анализе
+                        if (filled.length > 0) {
+                            // Небольшая задержка, чтобы браузер успел обновить DOM
+                            setTimeout(() => {
+                                alert('✅ Изображение проанализировано!\n\nЗаполнены поля:\n' + filled.join('\n') + '\n\nПроверьте поля формы ниже!');
+                            }, 300);
+                        } else {
+                            alert('⚠️ Анализ выполнен, но поля не заполнены.\nПолученные данные: ' + JSON.stringify(data));
+                        }
+                    } else if (result.warning) {
+                        console.log('⚠️ Предупреждение:', result.warning);
+                        alert('⚠️ ' + result.warning);
+                    } else {
+                        console.error('❌ Ошибка в ответе:', result);
+                        alert('❌ Ошибка анализа');
+                    }
+
+                } catch (error) {
+                    console.error('💥 Ошибка при анализе изображения:', error);
+                    alert('💥 ОШИБКА: ' + error.message);
+                }
+            }
+
+
+            photoInput.addEventListener('change', function (e) {
+                if (e.target.files && e.target.files[0]) {
+                    const file = e.target.files[0];
+
+
+                    if (!file.type.match('image.*')) {
+                        alert('Пожалуйста, выберите изображение');
+                        return;
+                    }
+
+
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        photoPreview.style.display = 'block';
+                        photoUploadArea.style.display = 'none';
+
+                        // Анализируем изображение после загрузки
+                        analyzeImage(file);
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+
+            removePhotoBtn.addEventListener('click', function () {
+                photoInput.value = '';
+                photoPreview.style.display = 'none';
+                photoUploadArea.style.display = 'block';
+            });
+
+
+            photoUploadArea.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                photoUploadArea.classList.add('dragover');
+            });
+
+            photoUploadArea.addEventListener('dragleave', function () {
+                photoUploadArea.classList.remove('dragover');
+            });
+
+            photoUploadArea.addEventListener('drop', function (e) {
+                e.preventDefault();
+                photoUploadArea.classList.remove('dragover');
+
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    const file = e.dataTransfer.files[0];
+
+
+                    if (!file.type.match('image.*')) {
+                        alert('Пожалуйста, перетащите изображение');
+                        return;
+                    }
+
+
+                    photoInput.files = e.dataTransfer.files;
+
+
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        photoPreview.style.display = 'block';
+                        photoUploadArea.style.display = 'none';
+
+                        // Анализируем изображение после загрузки
+                        analyzeImage(file);
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+            });
+
+
+            addItemForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const itemName = document.getElementById('item-name').value;
+                const itemCategory = document.getElementById('item-category').value;
+                const itemSize = document.getElementById('item-size').value;
+                const itemCondition = document.getElementById('item-condition').value;
+
+                if (!itemName || !itemCategory || !itemSize || !itemCondition) {
+                    alert('Пожалуйста, заполните все обязательные поля');
+                    return;
+                }
+
+                if (!photoInput.files[0]) {
+                    alert('Пожалуйста, добавьте фотографию вещи');
+                    return;
+                }
+
+                // СОЗДАЕМ И ОТПРАВЛЯЕМ FormData
+                const formData = new FormData(addItemForm);
+
+                // Отправляем данные на сервер
+                fetch('{{ url_for("after_donation",email=email) }}', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (response.redirected) {
+                            // Если сервер вернул редирект, следуем ему
+                            window.location.href = response.url;
+                        } else if (response.ok) {
+                            // Если ответ успешный, но нет редиректа, перенаправляем вручную
+                            return response.json().then(data => {
+                                window.location.href = data.redirect_url || '{{ url_for("after_donation",email=email) }}';
+                            });
+                        } else {
+                            return response.json().then(data => {
+                                alert('Ошибка: ' + (data.message || 'Неизвестная ошибка'));
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                        alert('Произошла ошибка при отправке формы');
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>
