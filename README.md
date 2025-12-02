@@ -1,5 +1,5 @@
 # CLORING-WEB
-!\[my badge\](https://badgen.net/badge/cloring/web/red?icon=github)
+![my badge](https://badgen.net/badge/cloring/web/red?icon=github)
 
 Веб-приложение для обмена и донации одежды с AI-анализом фотографий (BLIP).
 
